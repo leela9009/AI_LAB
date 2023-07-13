@@ -12,14 +12,9 @@ root=input("enter root node: ")
 goal=input("enter goal state: ")
 print(graph,"\n")
 
-def Append(l1, l2):
-    for i in l2:
-        if i not in l1:
-            l1.append(i)
-    return l1
-
 def BFS(g,root,goal):
-    open=[root]
+    open=[]
+    open.append(root)
     closed=[]
     print(open,closed)
     while(goal not in closed):
@@ -27,31 +22,29 @@ def BFS(g,root,goal):
         if x in closed:
             continue
         if x in g.keys():
-            open=Append(open,g[x])
+            open.extend(g[x])
         closed.append(x)
         print(open,closed)
 
-BFS(graph,'A','F')
+BFS(graph,'A','G')
 
 
 #DFS
-graph={'A':['B', 'C', 'D'], 'B':['E', 'F'], 'C':['F', 'G'], 'E':['H', 'I'], 'F':['J']}
-print(graph,"\n")
-
-def Add(l1, l2):
-    for i in range(len(l2)):
-        l1.insert(0,l2[len(l2)-i-1])
-    return l1
-
 def DFS(g,root,goal):
-    open=[root]
+    open=[]
+    open.append(root)
     closed=[]
+    print(open,closed)
     while (goal not in closed):
         x=open.pop(0)
+        if x in closed:
+            continue
+        closed.append(x)
+        x1=[]
         if x in g.keys():
-            open=Add(open,g[x])
-        elif x not in g.keys():
-            closed.insert(0,x)
+            x1.extend(g[x])
+            x1.extend(open)
+            open=x1
         print(open,closed)
 
-DFS(graph,'A','G')
+DFS(graph,root,goal)
