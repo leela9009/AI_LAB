@@ -1,24 +1,37 @@
 #BFS
-graph = {'A':['B', 'C', 'D'], 'B':['E', 'F'], 'C':['F', 'G'], 'E':['H', 'I'], 'F':['J']}
-print(graph)
+#graph = {'A':['B', 'C', 'D'], 'B':['E', 'F'], 'C':['F', 'G'], 'E':['H', 'I'], 'F':['J']}
+#print(graph)
 
-def append(l1,l2):
+graph={}
+n=int(input("enter no of nodes: "))
+for i in range(n):
+    root=input("enter node: ")
+    l=list(map(str,input("enter adjacency nodes: ").split()))
+    graph[root]=l
+root=input("enter root node: ")
+goal=input("enter goal state: ")
+print(graph,"\n")
+
+def Append(l1, l2):
     for i in l2:
         if i not in l1:
             l1.append(i)
     return l1
 
-def BFS(g, root, goal):
-    open = [root]
-    closed = []
+def BFS(g,root,goal):
+    open=[root]
+    closed=[]
+    print(open,closed)
     while(goal not in closed):
-        x = open.pop(0)
+        x=open.pop(0)
+        if x in closed:
+            continue
         if x in g.keys():
-            open = Append(open, g[x])
+            open=Append(open,g[x])
         closed.append(x)
-        print(open, closed)
-        
-BFS(graph, 'A', 'G')
+        print(open,closed)
+
+BFS(graph,'A','F')
 
 
 #DFS
