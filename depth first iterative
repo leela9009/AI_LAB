@@ -1,0 +1,26 @@
+graph = {'A':['B', 'C', 'D'], 'B':['E', 'F'], 'C':['F', 'G'], 'E':['H', 'I'], 'F':['J']}
+open=[]
+close=[]
+s=input('Enter source: ')
+open.append(s)
+level=0
+goal=input('Enter Goal')
+
+def dfid(g,open,close,goal,level):
+    if(len(open)==0): print("not present")
+    l=[]
+    i=0
+    while len(open)!=0:
+        if goal in close:
+              i=1
+              break
+        p=open.pop(0)
+        if(p in g):
+            l.extend(g[p])
+        close.append(p)
+    open=l
+
+    print(open,close,level)
+    if(i==0):
+        dfid(g,open,close,goal,level+1)
+dfid(g,open,close,goal,level)
