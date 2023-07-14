@@ -39,9 +39,22 @@ def water_jug_bfs(r, d, m, n): #5, 3
                 open.append(i)
         print(open, visited)
         
-        
-
 g = water_jug_bfs(root, dest, m, n)
+
+def path_taken(g, r, d):
+    x = d
+    ans = [tuple(d)]
+    while(x != r):
+        for i in g.keys():
+            if x in g[i]:
+                ans.insert(0, i)
+                break
+        x = list(ans[0])
+    return ans
+
+path = path_taken(g, root, dest)
+path
+
 
 #DFS
 
