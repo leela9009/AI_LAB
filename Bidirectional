@@ -1,0 +1,71 @@
+
+graph = {
+    'A': ['B', 'C', 'D'],
+    'B': ['E', 'F', 'A'],
+    'C': ['F', 'G', 'A'],
+    'D': ['A'],
+    'E': ['H', 'I', 'B'],
+    'F': ['J', 'B', 'C'],
+    'G': ['C'],
+    'H': ['E'],
+    'I': ['E'],
+    'J': ['F']
+}
+print(graph)
+
+def Bidirectional_BFS(g, root, goal):
+    flag = 0
+    open1 = [root]
+    closed1 = []
+    open2 = [goal]
+    closed2 = []
+    graph1 = {}
+    graph2={}
+    while(len(set(open1+open2))==len(open1+open2)):
+        # Front
+        x1 = open1.pop(0)
+        closed1.append(x1)
+        sub_nodes = g[x1]
+        graph1[x1]=[]
+        for i in sub_nodes:
+            if i not in open1+closed1:
+                graph1[x1].append(i)
+                open1.append(i)
+
+        #Back
+        x2 = open2.pop(0)
+        closed2.append(x2)
+        sub_nodes = g[x2]
+        graph2[x2]=[]
+        for i in sub_nodes:
+            if i not in open2+closed2:
+                graph2[x2].append(i)
+                open2.append(i)
+    # print(graph1, graph2)
+    path1, path2 = [], []
+    match_ele = ''
+    for i in open1:
+        if i in open2:
+            match_ele = i
+            break
+    x1, x2 = match_ele, match_ele
+    while root!=x1:
+        for i in graph1.keys():
+            if x1 in graph1[i]:
+                path1.insert(0, i)
+                break
+        x1 = path1[0]
+    path1.append(match_ele)
+
+    while goal!=x2:
+        for i in graph2.keys():
+            if x2 in graph2[i]:
+                path2.insert(0, i)
+                break
+        x2 = path2[0]
+
+    print("Final Path : ",path1+path2[::-1])
+
+root = input('Enter root node : ')
+goal = input('Enter Goal node : ')
+Bidirectional_BFS(graph, root, goal)
