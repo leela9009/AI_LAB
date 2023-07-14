@@ -1,0 +1,46 @@
+#uniform cost search
+# graph = {'A':['B', 'C'], 'B':['D'], 'C':['F'], 'D':['G'], 'F':['E', 'H'], 'G':['E', 'H'], 'H':['E']}
+# dist = {('A', 'C'):4, ('A', 'B'):6, ('B', 'D'):4, ('C', 'F'):8, ('D', 'G'):2, ('F', 'E'):9, ('F', 'H'):7, ('G', 'E'):9, ('G', 'H'):3, ('H', 'E'):4}
+# print(graph)
+# print(dist)
+graph={}
+n=int(input("enter no of nodes"))
+for i in range(n):
+    root=input()
+    l=list(map(str,input("enter adgacent nodes").split()))
+    graph[root]=l
+dist={}
+n1=int(input("enter no of total edges"))
+for i in range(n1):
+    sv=input("start vertex")
+    ev=input("end vertex")
+    cost=int(input())
+    dist[(sv,ev)]=cost
+start=input("enter starting node")
+goal=input("enter goal node")
+print(graph)
+
+def uniformcost(g,d,start,goal,vis):
+    open=[]
+    close=[]
+    dist=[]
+    open.append([0,start])
+    print(open,close)
+    while goal not in close:
+        l=open.pop(0)
+        close.append(l[1])
+        dist.append(l[0])
+        if l[1] in g:
+            for k in g[l[1]]:
+                t=(l[1],k)
+                c=d[t]+l[0]
+                if [c,k] in open:
+                    continue
+                open.append([c,k])
+                vis[k]=l[1]
+            open.sort()
+        print(open,close)
+    print(dist[len(dist)-1])
+d={}
+uniformcost(graph,dist,'A','E',d)
+print(d)
